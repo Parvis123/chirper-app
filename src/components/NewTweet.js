@@ -1,28 +1,28 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { handleAddTweet } from "../actions/tweets";
 
 class NewTweet extends Component {
   state = {
     text: "",
   };
-
   handleChange = (e) => {
     const text = e.target.value;
-
     this.setState(() => ({
       text,
     }));
   };
-
   handleSubmit = (e) => {
     e.preventDefault();
 
     const { text } = this.state;
+    const { dispatch, id } = this.props;
 
-    console.log("New Tweet Submitted!: ", text);
+    dispatch(handleAddTweet(text, id));
 
-    this.setState({
+    this.setState(() => ({
       text: "",
-    });
+    }));
   };
 
   render() {
@@ -51,4 +51,4 @@ class NewTweet extends Component {
   }
 }
 
-export default NewTweet;
+export default connect()(NewTweet);
